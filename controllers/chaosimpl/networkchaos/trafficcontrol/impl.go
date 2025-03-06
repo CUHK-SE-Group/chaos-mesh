@@ -258,6 +258,8 @@ func (impl *Impl) ApplyTc(ctx context.Context, m *podnetworkchaosmanager.PodNetw
 		tcType = v1alpha1.Netem
 	case v1alpha1.BandwidthAction:
 		tcType = v1alpha1.Bandwidth
+	case v1alpha1.ConnectDelayAction:
+		tcType = v1alpha1.ConnectDelay
 	default:
 		return errors.Wrapf(utils.ErrUnknownAction, "action: %s", spec.Action)
 	}

@@ -55,6 +55,9 @@ const (
 	// DelayAction represents the chaos action of adding delay on pods.
 	DelayAction NetworkChaosAction = "delay"
 
+	// ConnectDelayAction represents the chaos action of adding connect delay on pods.
+	ConnectDelayAction NetworkChaosAction = "connectdealy"
+
 	// LossAction represents the chaos action of losing packets on pods.
 	LossAction NetworkChaosAction = "loss"
 
@@ -136,6 +139,11 @@ type NetworkChaosStatus struct {
 	// Instances always specifies podnetworkchaos generation or empty
 	// +optional
 	Instances map[string]int64 `json:"instances,omitempty"`
+}
+
+// ConnectDelaySpec defines detail of a connect delay action
+type ConnectDelaySpec struct {
+	Latency string `json:"latency" webhook:"Duration"`
 }
 
 // DelaySpec defines detail of a delay action

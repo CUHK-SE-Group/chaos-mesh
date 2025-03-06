@@ -251,6 +251,17 @@ func (r *Reconciler) SetTcs(ctx context.Context, pod *corev1.Pod, chaos *v1alpha
 				Ipset:  tc.IPSet,
 				Device: tc.Device,
 			})
+		} else if tc.Type == v1alpha1.ConnectDelay {
+			netem, err := netem.FromConnectDelay(tc.ConnectDelay)
+			if err != nil {
+				return err
+			}
+			tcs = append(tcs, &pb.Tc{
+				Type:   pb.Tc_CONNECT_NETEM,
+				Netem:  netem,
+				Ipset:  tc.IPSet,
+				Device: tc.Device,
+			})
 		} else {
 			return errors.New("unknown tc type")
 		}

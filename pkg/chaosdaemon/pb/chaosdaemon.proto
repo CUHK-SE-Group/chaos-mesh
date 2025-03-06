@@ -257,6 +257,7 @@ message Tc {
   enum Type {
     NETEM = 0;
     BANDWIDTH = 1;
+    CONNECT_NETEM = 2;
   }
   Type type = 1;
   Netem netem = 2;

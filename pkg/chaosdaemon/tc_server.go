@@ -273,6 +273,11 @@ func (s *DaemonServer) setFilterTcs(
 			ch.Ipsets = []string{tc.Ipset}
 		}
 
+		if tc.Type == pb.Tc_CONNECT_NETEM {
+			ch.TcpFlags = "ALL SYN,ACK"
+			tc.Protocol = "tcp"
+		}
+
 		ch.Protocol = tc.Protocol
 		ch.SourcePorts = tc.SourcePort
 		ch.DestinationPorts = tc.EgressPort
@@ -497,6 +502,11 @@ func convertTbfToArgs(tbf *pb.Tbf) string {
 
 func abstractTcFilter(tc *pb.Tc) string {
 	filter := tc.Ipset
+
+	if tc.Type == pb.Tc_CONNECT_NETEM {
+		filter = "-p tcp --tcp-flags ALL SYN,ACK"
+		return filter
+	}
 
 	if len(tc.Protocol) > 0 {
 		filter += "-" + tc.Protocol

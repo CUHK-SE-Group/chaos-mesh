@@ -23,6 +23,18 @@ import (
 	chaosdaemonpb "github.com/chaos-mesh/chaos-mesh/pkg/chaosdaemon/pb"
 )
 
+func FromConnectDelay(in *v1alpha1.ConnectDelaySpec) (*chaosdaemonpb.Netem, error){
+	delayTime, err := time.ParseDuration(in.Latency)
+	if err != nil {
+		return nil, err
+	}
+	netem := &chaosdaemonpb.Netem{
+		Time:      uint32(delayTime.Nanoseconds() / 1e3),
+	}
+
+	return netem,nil
+}
+
 // FromDelay convert delay to netem
 func FromDelay(in *v1alpha1.DelaySpec) (*chaosdaemonpb.Netem, error) {
 	// Parse latency and jitter inputs to ensure they are valid

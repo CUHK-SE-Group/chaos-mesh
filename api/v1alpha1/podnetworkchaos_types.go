@@ -137,6 +137,9 @@ const (
 	// Netem represents netem traffic control
 	Netem TcType = "netem"
 
+	// ConnectDelay
+	ConnectDelay TcType = "connectdelay"
+
 	// Bandwidth represents bandwidth shape traffic control
 	Bandwidth TcType = "bandwidth"
 )
@@ -166,6 +169,11 @@ type TcParameter struct {
 	// +ui:form:when=action=='delay'
 	// +optional
 	Delay *DelaySpec `json:"delay,omitempty"`
+
+	// ConnectDelay represents the detail about connect delay action
+	// +ui:form:when=action=='connectdelay'
+	// +optional
+	ConnectDelay *ConnectDelaySpec `json:"connectdelay,omitempty"`
 
 	// Loss represents the detail about loss action
 	// +ui:form:when=action=='loss'
